@@ -35,8 +35,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <paper-card heading="Contact">
       <!-- Listens for "input" event and sets greeting to <input>.value -->
-      <img src="http://placehold.it/250x150" width="250px" />
-      <webda-upload-fab mini icon="attachment" style="float: right; margin-top: -32px;"></webda-upload-fab>
+      <img src="{{img}}" width="250px" />
+      <webda-upload-fab id="image" mini icon="attachment" path="contacts/{{model.uuid}}/images/add" b64content="{{img}}" style="float: right; margin-top: -32px;" store="binary"></webda-upload-fab>
       <div class="card-content">
       <paper-input label="Firstname" value="{{model.firstName}}"></paper-input>
       <paper-input label="Lastname" value="{{model.lastName}}"></paper-input>
@@ -44,7 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="card-actions">
         <paper-icon-button icon="delete" on-tap="delete"></paper-icon-button>
-        <paper-icon-button icon="save" on-tap="save" style="float: right"></paper-icon-button>
+        <paper-icon-button icon="save" on-tap="saveContact" style="float: right"></paper-icon-button>
       </div>
     </paper-card>
   </template>
@@ -55,7 +55,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       Polymer({
         is: 'contact-card',
-        behaviors: [Webda.Behaviors.Store]
+        behaviors: [Webda.Behaviors.Store],
+        properties: {
+          img: {
+            type: String,
+            value: "http://placehold.it/250x150"
+          },
+          model: {
+            type: Object,
+            observer: 'modelLoaded'
+          }
+        },
+        modelLoaded: function() {
+          if (this.model.images) {
+            this.img = Webda.url('binary/contacts/' + this.model.uuid + '/images/0');
+          }
+        },
+        saveContact: function() {
+          return this.save().then ( () => {
+            if (this.img.startsWith("data:")) {
+              // Need to upload
+              return this.$.image.upload();
+            }
+            return;
+          });
+        }
       });
     })();
   </script>

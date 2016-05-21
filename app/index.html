@@ -61,9 +61,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <body unresolved>
   <span id="browser-sync-binding"></span>
-  <!-- <webda-core url="http://localhost:18080"></webda-core> -->
   <template is="dom-bind" id="app">
-    <webda-core url="https://nmyp71h8zf.execute-api.us-west-2.amazonaws.com/Test" auto-me="{{user}}"></webda-core>
+    <!-- <webda-core url="https://nmyp71h8zf.execute-api.us-west-2.amazonaws.com/Test" auto-me="{{user}}"></webda-core> -->
+    <webda-core url="http://localhost:18080" auto-me="{{user}}"></webda-core>
     <!-- <iron-ajax url="http://localhost:18080/auth/me" id="meAjax" last-response="{{user}}" with-credentials></iron-ajax> -->
     <paper-drawer-panel id="paperDrawerPanel">
       <!-- Drawer Scroll Header Panel -->
@@ -80,7 +80,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="home"></iron-icon>
             <span>Home</span>
           </a>
-
+          <a on-tap="logout" style="position: absolute; bottom: 0px; cursor: pointer; left: 0px; right: 0px;">
+            <iron-icon icon="forward"></iron-icon>
+            <span>Logout</span>
+          </a>
         </paper-menu>
       </paper-scroll-header-panel>
 
@@ -114,7 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-material elevation="1">
                   <p class="subhead">Please login:</p>
                   <div>
-                    <webda-auth-email-panel class="login" handle-register></webda-auth-email-panel>
+                    <webda-auth-email-panel id="authComponent" class="login" handle-register></webda-auth-email-panel>
                   </div>
                 </paper-material>
               </template>

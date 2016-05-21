@@ -32,13 +32,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   };
 
+  app.logout = function() {
+    Webda.logout();
+  }
+
   app.addContact = function() {
     app.push('contacts', {'firstName': 'John', 'lastName': 'Doe'});
   }
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
-  app.addEventListener('dom-change', function() {
-    console.log('Our app is ready to rock!');
+  window.addEventListener('Webda.Store.Delete', function(evt) {
+    let model = evt.detail;
+    if (model === undefined) return;
+    for (let i in app.contacts) {
+      if (app.contacts[i].uuid === model.uuid && model.uuid !== undefined || app.contacts[i] === model) {
+        app.splice('contacts', i, 1);
+        return;
+      }
+    }
+    for (let i in app.user.contacts) {
+      if (app.user.contacts[i].uuid === model.uuid) {
+        app.splice('user.contacts', i, 1);
+        return;
+      }
+    }
   });
 
   // See https://github.com/Polymer/polymer/issues/1381

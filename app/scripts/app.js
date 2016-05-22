@@ -58,6 +58,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   });
 
+  window.addEventListener('Webda.Login', function(evt) {
+    top.location.reload();
+  });
+
+  window.addEventListener('Webda.Logout', function(evt) {
+    top.location.reload();
+  });
+
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() { 
     

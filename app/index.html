@@ -79,10 +79,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="home"></iron-icon>
             <span>Home</span>
           </a>
-          <a on-tap="logout" style="position: absolute; bottom: 0px; cursor: pointer; left: 0px; right: 0px;">
-            <iron-icon icon="forward"></iron-icon>
-            <span>Logout</span>
-          </a>
+          <template is="dom-if" if="[[user.uuid]]">
+            <a on-tap="logout" style="position: absolute; bottom: 0px; cursor: pointer; left: 0px; right: 0px;">
+              <iron-icon icon="forward"></iron-icon>
+              <span>Logout</span>
+            </a>
+          </template>
         </paper-menu>
       </paper-scroll-header-panel>
 
